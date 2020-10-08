@@ -23,13 +23,16 @@ class _ClockViewState extends State<ClockView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      width: 300,
-      child: Transform.rotate(
-        angle: -pi / 2,
-        child: CustomPaint(
-          painter: ClockPainter(),
+    return Align(
+      alignment: Alignment.topCenter,
+          child: Container(
+        height: widget.size,
+        width: widget.size,
+        child: Transform.rotate(
+          angle: -pi / 2,
+          child: CustomPaint(
+            painter: ClockPainter(),
+          ),
         ),
       ),
     );
@@ -100,7 +103,7 @@ class ClockPainter extends CustomPainter {
         radius *
             0.4 *
             cos((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
-    var hourHandY = centerX +
+    var hourHandY = centerY +
         radius *
             0.4 *
             sin((dateTime.hour * 30 + dateTime.minute * 0.5) * pi / 180);
@@ -109,13 +112,13 @@ class ClockPainter extends CustomPainter {
     var minuteHandX =
         centerX + radius * 0.6 * cos(dateTime.minute * 6 * pi / 180);
     var minuteHandY =
-        centerX + radius * 0.6 * sin(dateTime.minute * 6 * pi / 180);
+        centerY + radius * 0.6 * sin(dateTime.minute * 6 * pi / 180);
     canvas.drawLine(center, Offset(minuteHandX, minuteHandY), minuteHandBrush);
 
     var secondHandX =
         centerX + radius * 0.6 * cos(dateTime.second * 6 * pi / 180);
     var secondHandY =
-        centerX + radius * 0.6 * sin(dateTime.second * 6 * pi / 180);
+        centerY + radius * 0.6 * sin(dateTime.second * 6 * pi / 180);
     canvas.drawLine(center, Offset(secondHandX, secondHandY), secondHandBrush);
 
     // canvas.drawCircle(center, 16, centerFillBruh);
@@ -125,10 +128,10 @@ class ClockPainter extends CustomPainter {
     var innerCircleRadius = radius * 0.9;
     for (var i = 0; i < 360; i += 12) {
       var x1 = centerX + outerCircleRadius * cos(i * pi / 180);
-      var y1 = centerX + outerCircleRadius * sin(i * pi / 180);
+      var y1 = centerY + outerCircleRadius * sin(i * pi / 180);
 
       var x2 = centerX + innerCircleRadius * cos(i * pi / 180);
-      var y2 = centerX + innerCircleRadius * sin(i * pi / 180);
+      var y2 = centerY + innerCircleRadius * sin(i * pi / 180);
       canvas.drawLine(Offset(x1, y1), Offset(x2, y2), dashBrush);
     }
   }
