@@ -1,9 +1,18 @@
 import 'package:clock_app/constants/constants.dart';
+import 'package:flutter/foundation.dart';
 
-class MenuInfo {
+class MenuInfo extends ChangeNotifier {
   MenuType menuType;
   String title;
-  String imageResource;
+  String imageSource;
 
-  MenuInfo(this.menuType, {this.title, this.imageResource});
+  MenuInfo(this.menuType, {this.title, this.imageSource});
+
+  updateMenu(MenuInfo menuInfo) {
+    this.menuType = menuInfo.menuType;
+    this.title = menuInfo.title;
+    this.imageSource = menuInfo.imageSource;
+
+    notifyListeners();
+  }
 }
