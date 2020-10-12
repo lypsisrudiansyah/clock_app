@@ -1,0 +1,11 @@
+1. Apa yang terjadi jika permission 
+<uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+dan
+<activity
+    android:showWhenLocked="true"
+    android:turnScreenOn="true"> 
+
+juga di set ke android manifest.
+
+2. Gimana caranya minta ijin notifikasi mengambang, muncul saat lockscreen dan ada audionya
+3. cara ngelihat detail notif yang pesannya panjang
