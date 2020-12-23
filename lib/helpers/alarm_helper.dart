@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:clock_app/model/alarm_info_model.dart';
+// import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqflite.dart';
 
 final String tableAlarm = 'alarm';
@@ -30,25 +31,25 @@ class AlarmHelper {
   }
 
   Future<Database> initializeDatabase() async {
+    print("initializeDatabase() terpanggil");
     var dir = await getDatabasesPath();
-    var path = dir + "alarm.db";
+    var path = dir + "/" + "alarm.db";
 
     var database = await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) {
         db.execute('''
-          create table $tableAlarm(
+          create table $tableAlarm (
             $columnId integer primary key autoincrement,
             $columnTitle text not null,
             $columnDateTime text not null,
             $columnPending integer,
-            $columnColorIndex integer,
-          )
+            $columnColorIndex integer)
         ''');
       },
     );
-
+    print(database);
     return database;
   }
 
@@ -56,5 +57,23 @@ class AlarmHelper {
     var db = await this.database;
     var result = await db.insert(tableAlarm, alarmInfo.toJson());
     print('result : $result');
+  }
+  
+  Future<List<AlarmInfo>> getAlarms() async {
+    List<AlarmInfo> _alarms = [];
+
+    var db = await this.database;
+    var result = await db.query(tableAlarm);
+    result.forEach((element) {
+      var alarmInfo = AlarmInfo.fromJson(element);
+      _alarms.add(alarmInfo);
+    });
+
+    return _alarms;
+  }
+
+  Future<int> delete(int id) async {
+    var db = await this.database;
+    return await db.delete(tableAlarm, where: "$columnId = ?", whereArgs: [id]);
   }
 }

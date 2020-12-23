@@ -5,7 +5,8 @@ class AlarmInfo {
   String title;
   DateTime alarmDateTime;
   bool isPending;
-  List<Color> gradientColorIndex;
+  int gradientColorIndex;
+  // List<Color> gradientColorIndex;
 
   AlarmInfo({this.id, this.title, this.alarmDateTime, this.isPending, this.gradientColorIndex});
 

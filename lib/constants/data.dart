@@ -10,7 +10,7 @@ List<MenuInfo> menuItems = [
 ];
 
 List<AlarmInfo> alarms = [
-  AlarmInfo(id: 1, title: "Office", alarmDateTime: DateTime.now().add(Duration(hours: 1)), isPending: false, gradientColorIndex: GradientColors.sky),
-  AlarmInfo(id: 2, title: "Office", alarmDateTime: DateTime.now().add(Duration(hours: 1)), isPending: false, gradientColorIndex: GradientColors.sunset),
+  AlarmInfo(id: 1, title: "Office", alarmDateTime: DateTime.now().add(Duration(hours: 1)), isPending: false, gradientColorIndex: 0),
+  AlarmInfo(id: 2, title: "Office", alarmDateTime: DateTime.now().add(Duration(hours: 1)), isPending: false, gradientColorIndex: 1),
   // AlarmInfo(DateTime.now().add(Duration(hours: 1)), description: "Office", gradientColors: GradientColors.sunset),
 ];
