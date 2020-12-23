@@ -10,19 +10,4 @@ juga di set ke android manifest.
 2. Gimana caranya minta ijin notifikasi mengambang, muncul saat lockscreen dan ada audionya
 3. cara ngelihat detail notif yang pesannya panjang
 
-Commit :
 
-refactor: AlarmPage
-- Add ShowModalBottomSheet for picking time and save it as alarm data
-- Working with AlarmHelper to manage data(Read, Save and Delete Data) 
-
-refactor: AlarmHelper
-- modify some codes
-- add getAlarms(list data alarms) and delete alarms methods
-
-refactor: constants
-
-refactor: AlarmInfoModel
-
-feat: Add ModalHelper
-- Add Confirm Dialog, that i use for Confirm before deleting an alarm
