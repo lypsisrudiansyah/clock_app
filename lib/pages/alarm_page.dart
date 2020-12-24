@@ -1,5 +1,4 @@
 import 'package:clock_app/constants/constants.dart';
-import 'package:clock_app/constants/data.dart';
 import 'package:clock_app/helpers/alarm_helper.dart';
 import 'package:clock_app/helpers/ui/modal_helper.dart';
 import 'package:clock_app/main.dart';
@@ -7,7 +6,11 @@ import 'package:clock_app/model/alarm_info_model.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'dart:async';
 
 class AlarmPage extends StatefulWidget {
   @override
@@ -132,7 +135,8 @@ class _AlarmPageState extends State<AlarmPage> {
                                   onPressed: () {
                                     ModalHelper.instance.modalKeluar(
                                       context,
-                                      modalTitle: "Are you sure want to delete this alarm ?",
+                                      modalTitle:
+                                          "Are you sure want to delete this alarm ?",
                                       onClick: () {
                                         Navigator.maybePop(context);
                                         _alarmHelper.delete(alarm.id);
@@ -246,7 +250,8 @@ class _AlarmPageState extends State<AlarmPage> {
                                                                 Duration(
                                                                     days: 1));
                                                       }
-
+                                                      scheduleAlarm(
+                                                          scheduleAlarmDateTime);
                                                       var alarmInfo = AlarmInfo(
                                                           alarmDateTime:
                                                               scheduleAlarmDateTime,
@@ -308,9 +313,15 @@ class _AlarmPageState extends State<AlarmPage> {
     );
   }
 
-  void scheduleAlarm() async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 5));
+  void scheduleAlarm(scheduleAlarmDateTime) async {
+    final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
+
+    var time = tz.TZDateTime.from(
+      scheduleAlarmDateTime,
+      tz.local,
+    );
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       "alarm_notif",
@@ -319,12 +330,15 @@ class _AlarmPageState extends State<AlarmPage> {
       icon: 'learn_more',
       priority: Priority.high,
       importance: Importance.max,
-      sound: RawResourceAndroidNotificationSound('sound_2'),
+      sound: RawResourceAndroidNotificationSound('alarm1'),
       largeIcon: DrawableResourceAndroidBitmap('learn_more'),
+      fullScreenIntent: true,
+      styleInformation: BigTextStyleInformation(''),
+      timeoutAfter: 2500,
     );
 
     var iOSPlatformChannelSpecifics = IOSNotificationDetails(
-      sound: 'sound_2.wav',
+      sound: 'alarm1.wav',
       presentAlert: true,
       presentBadge: true,
       presentSound: true,
@@ -335,11 +349,19 @@ class _AlarmPageState extends State<AlarmPage> {
       iOS: iOSPlatformChannelSpecifics,
     );
 
-    await flutterLocalNotificationsPlugin.show(
+    // await flutterLocalNotificationsPlugin.show(
+    //     0,
+    //     "Office",
+    //     "Good Afternoon, and Good Upgrade, Learn More, Learn More Learn More Learn More Learn MoreLearn More",
+    //     platformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        "Office",
-        "Good Afternoon, and Good Upgrade, Learn More, Learn More Learn More Learn More Learn MoreLearn More",
-        platformChannelSpecifics);
-    // await flutterLocalNotificationsPlugin.schedule(0, "Office", "Good Afternoon, and Good Upgrade, Learn More", scheduledNotificationDateTime, platformChannelSpecifics);
+        "Bismillah",
+        "Semangat terus belajarnya, jangan buang waktu ya rudi, ingat ada orang tua yang kita mesti berbakti kepada keduanya, ingat kelak ada ukhti yang harus dinikahi",
+        time,
+        platformChannelSpecifics,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true);
   }
 }

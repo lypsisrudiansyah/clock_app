@@ -33,6 +33,7 @@ dependencies:
   intl: ^0.16.1
   dotted_border: ^1.0.6
   flutter_local_notifications: ^2.0.0+1
+  flutter_native_timezone: ^1.0.4
   
 
 dev_dependencies:

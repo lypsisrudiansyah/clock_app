@@ -10,4 +10,10 @@ juga di set ke android manifest.
 2. Gimana caranya minta ijin notifikasi mengambang, muncul saat lockscreen dan ada audionya
 3. cara ngelihat detail notif yang pesannya panjang
 
+Commit:
 
+feat: Add Alarm Notification when alarm time is reached
+
+refactor: audio resource of alarm
+
+feat: Add flutter_native_timezone to get LocalTimeZoneName
